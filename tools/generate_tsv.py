@@ -27,6 +27,7 @@ import csv
 from multiprocessing import Process
 import random
 import json
+import pdb
 
 csv.field_size_limit(sys.maxsize)
 
@@ -56,11 +57,16 @@ def load_image_ids(split_name):
           filepath = os.path.join('/data/test2015/', item['file_name'])
           split.append((filepath,image_id))
     elif split_name == 'genome':
-      with open('/data/visualgenome/image_data.json') as f:
-        for item in json.load(f):
-          image_id = int(item['image_id'])
-          filepath = os.path.join('/data/visualgenome/', item['url'].split('rak248/')[-1])
-          split.append((filepath,image_id))      
+    #   with open('/data/visualgenome/image_data.json') as f:
+    #     for item in json.load(f):
+    #       image_id = int(item['image_id'])
+    #       filepath = os.path.join('/data/visualgenome/', item['url'].split('rak248/')[-1])
+    #       split.append((filepath,image_id))      
+        for files in os.listdir('./data/COCO_val2014_000000572055_inserted'):
+            # pdb.set_trace()
+            image_id = int(files[:-4])
+            filepath = os.path.join('./data/COCO_val2014_000000572055_inserted',files)
+            split.append((filepath, image_id))
     else:
       print 'Unknown split'
     return split
